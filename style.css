@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f0f8ff;
+  background: ##0033A0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,7 +8,7 @@ body {
 }
 
 .quiz-container {
-  background: white;
+  background: blue;
   padding: 20px;
   width: 300px;
   text-align: center;
@@ -22,3 +22,4 @@ button {
   width: 100%;
   cursor: pointer;
 }
+
