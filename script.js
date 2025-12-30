@@ -1,171 +1,102 @@
-const quiz = [
-  // EASY
-  {
-    question: "What is the capital city of Barbados?",
-    answers: ["Bridgetown", "Kingston", "Castries"],
-    correct: "Bridgetown"
-  },
-  {
-    question: "Which ocean surrounds Barbados?",
-    answers: ["Atlantic Ocean", "Pacific Ocean", "Indian Ocean"],
-    correct: "Atlantic Ocean"
-  },
-  {
-    question: "What is the official language of Barbados?",
-    answers: ["English", "Spanish", "French"],
-    correct: "English"
-  },
-  {
-    question: "What is the national flower of Barbados?",
-    answers: ["Pride of Barbados", "Hibiscus", "Orchid"],
-    correct: "Pride of Barbados"
-  },
-  {
-    question: "Barbados is part of which region?",
-    answers: ["Caribbean", "South America", "Europe"],
-    correct: "Caribbean"
-  },
-
-  // MEDIUM
-  {
-    question: "Who is known as the “Father of Independence” in Barbados?",
-    answers: ["Errol Barrow", "Grantley Adams", "Rihanna"],
-    correct: "Errol Barrow"
-  },
-  {
-    question: "In what year did Barbados gain independence from Britain?",
-    answers: ["1966", "1973", "1958"],
-    correct: "1966"
-  },
-  {
-    question: "What currency is used in Barbados?",
-    answers: ["Barbadian Dollar", "US Dollar", "Eastern Caribbean Dollar"],
-    correct: "Barbadian Dollar"
-  },
-  {
-    question: "What is the name of Barbados’ national dish?",
-    answers: ["Cou-cou and flying fish", "Rice and peas", "Callaloo"],
-    correct: "Cou-cou and flying fish"
-  },
-  {
-    question: "Which sport is most popular in Barbados?",
-    answers: ["Cricket", "Football", "Basketball"],
-    correct: "Cricket"
-  },
-
-  // HARD
-  {
-    question: "What is the highest point in Barbados called?",
-    answers: ["Mount Hillaby", "Pico Duarte", "Blue Mountain Peak"],
-    correct: "Mount Hillaby"
-  },
-  {
-    question: "Which former British monarch appeared on Barbados’ coins before the country became a republic?",
-    answers: ["Queen Elizabeth II", "King Charles III", "Queen Victoria"],
-    correct: "Queen Elizabeth II"
-  },
-  {
-    question: "What is the name of the limestone caves found in Barbados that are popular tourist attractions?",
-    answers: ["Harrison’s Cave", "Crystal Cave", "Blue Grotto"],
-    correct: "Harrison’s Cave"
-  },
-  {
-    question: "Barbados became a republic in which year?",
-    answers: ["2021", "2018", "2015"],
-    correct: "2021"
-  },
-  {
-    question: "What nickname is commonly used to refer to Barbados?",
-    answers: ["Bim", "Jamrock", "The Rock"],
-    correct: "Bim"
-  },
-
-  // TRUE / FALSE
-  {
-    question: "Barbados was the first Caribbean country to become a republic.",
-    answers: ["True", "False"],
-    correct: "False"
-  },
-  {
-    question: "Rihanna is originally from Barbados.",
-    answers: ["True", "False"],
-    correct: "True"
-  },
-  {
-    question: "Sugar production played a major role in Barbados’ history.",
-    answers: ["True", "False"],
-    correct: "True"
-  },
-
-  // BONUS
-  {
-    question: "What famous Barbadian singer is also a global fashion entrepreneur?",
-    answers: ["Rihanna", "Adele", "Beyoncé"],
-    correct: "Rihanna"
-  },
-  {
-    question: "What color and symbol appear on the center of the Barbados flag?",
-    answers: [
-      "Gold with a black trident",
-      "Green with a white star",
-      "Red with a crown"
-    ],
-    correct: "Gold with a black trident"
-  }
-];
-
-let current = 0;
-let score = 0;
-let answered = false;
-
-function loadQuestion() {
-  answered = false;
-  document.getElementById("question").textContent = quiz[current].question;
-
-  const answersDiv = document.getElementById("answers");
-  answersDiv.innerHTML = "";
-
-  quiz[current].answers.forEach(answer => {
-    const button = document.createElement("button");
-    button.textContent = answer;
-
-    button.onclick = () => {
-      if (answered) return;
-      answered = true;
-
-      if (answer === quiz[current].correct) {
-        score++;
-        button.style.backgroundColor = "#4CAF50"; // green
-      } else {
-        button.style.backgroundColor = "#f44336"; // red
-      }
-
-      // Disable all buttons
-      document.querySelectorAll("#answers button").forEach(btn => {
-        btn.disabled = true;
-      });
-
-      document.getElementById("score").textContent =
-        `Score: ${score} / ${quiz.length}`;
-    };
-
-    answersDiv.appendChild(button);
-  });
+* {
+  box-sizing: border-box;
 }
 
-function nextQuestion() {
-  if (!answered) return;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  current++;
-  if (current < quiz.length) {
-    loadQuestion();
-  } else {
-    document.querySelector(".quiz-container").innerHTML = `
-      <h2>Game Over</h2>
-      <p>Your final score: ${score} / ${quiz.length}</p>
-    `;
-  }
+  /* Animated Barbados flag background */
+  background: linear-gradient(
+    90deg,
+    #0033A0,
+    #0033A0,
+    #FFCD00,
+    #FFCD00,
+    #0033A0,
+    #0033A0
+  );
+  background-size: 300% 300%;
+  animation: flagMove 12s ease infinite;
 }
 
-loadQuestion();
+@keyframes flagMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
+.quiz-container {
+  background: white;
+  width: 90%;
+  max-width: 360px;
+  padding: 20px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+.trident {
+  font-size: 48px;
+  color: black;
+  margin-bottom: 10px;
+}
+
+h1 {
+  margin: 5px 0 15px;
+}
+
+#question {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+button {
+  background-color: #0033A0;
+  color: white;
+  border: none;
+  padding: 12px;
+  margin: 6px 0;
+  width: 100%;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: scale(1.03);
+}
+
+button.correct {
+  background-color: #4CAF50 !important;
+}
+
+button.wrong {
+  background-color: #f44336 !important;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+#score {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  button {
+    font-size: 15px;
+  }
+}
