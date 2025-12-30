@@ -1,26 +1,102 @@
-quiz[current].answers.forEach(answer => {
-  const button = document.createElement("button");
-  button.textContent = answer;
+* {
+  box-sizing: border-box;
+}
 
-  button.onclick = () => {
-    if (answered) return; // prevent changing answer
-    answered = true;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    if (answer === quiz[current].correct) {
-      score++;
-      button.classList.add("correct"); // <- CSS handles green
-    } else {
-      button.classList.add("wrong");   // <- CSS handles red
-    }
+  /* Animated Barbados flag background */
+  background: linear-gradient(
+    90deg,
+    #0033A0,
+    #0033A0,
+    #FFCD00,
+    #FFCD00,
+    #0033A0,
+    #0033A0
+  );
+  background-size: 300% 300%;
+  animation: flagMove 12s ease infinite;
+}
 
-    // disable all buttons
-    document.querySelectorAll("#answers button").forEach(btn => {
-      btn.disabled = true;
-    });
+@keyframes flagMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    document.getElementById("score").textContent =
-      `Score: ${score} / ${quiz.length}`;
-  };
+.quiz-container {
+  background: white;
+  width: 90%;
+  max-width: 360px;
+  padding: 20px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
 
-  answersDiv.appendChild(button);
-});
+.trident {
+  font-size: 48px;
+  color: black;
+  margin-bottom: 10px;
+}
+
+h1 {
+  margin: 5px 0 15px;
+}
+
+#question {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+button {
+  background-color: #0033A0;
+  color: white;
+  border: none;
+  padding: 12px;
+  margin: 6px 0;
+  width: 100%;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: scale(1.03);
+}
+
+button.correct {
+  background-color: #4CAF50 !important;
+}
+
+button.wrong {
+  background-color: #f44336 !important;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+#score {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  button {
+    font-size: 15px;
+  }
+}
