@@ -1,102 +1,249 @@
-* {
-  box-sizing: border-box;
-}
+const quiz = [
+  // HISTORY & POLITICS
+  {
+    question: "Which European country first claimed Barbados, and in what year?",
+    answers: ["England, 1625", "Spain, 1492", "Portugal, 1500", "France, 1635"],
+    correct: "England, 1625"
+  },
+  {
+    question: "Who was the first Premier of Barbados after the introduction of internal self-government in 1953?",
+    answers: ["Grantley Adams", "Errol Barrow", "Tom Adams", "David Thompson"],
+    correct: "Grantley Adams"
+  },
+  {
+    question: "What was the role of the Barbados Regiment in the British Empire?",
+    answers: [
+      "Defense and ceremonial duties",
+      "Naval exploration",
+      "Colonial administration",
+      "Tax collection"
+    ],
+    correct: "Defense and ceremonial duties"
+  },
+  {
+    question: "Which political party dominated Barbados politics from independence in 1966 until the 1990s?",
+    answers: [
+      "Democratic Labour Party",
+      "Barbados Labour Party",
+      "People’s Progressive Party",
+      "Green Party"
+    ],
+    correct: "Barbados Labour Party"
+  },
+  {
+    question: "Name the year when Barbados transitioned from a constitutional monarchy to a republic.",
+    answers: ["2021", "2000", "2018", "1999"],
+    correct: "2021"
+  },
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  // GEOGRAPHY & ENVIRONMENT
+  {
+    question: "What is the name of the major freshwater reservoir in Barbados?",
+    answers: ["Graeme Hall Swamp", "Morne Trois Pitons", "Chancery Lane Reservoir", "Bridgetown Lake"],
+    correct: "Graeme Hall Swamp"
+  },
+  {
+    question: "Barbados has a unique geological feature on its east coast formed by coral limestone. What is it called?",
+    answers: ["Ragged Point Cliffs", "Harrison’s Cave", "Bathsheba Reef", "Mount Hillaby"],
+    correct: "Ragged Point Cliffs"
+  },
+  {
+    question: "Name two of the endemic bird species found in Barbados.",
+    answers: [
+      "Barbados Bullfinch & Barbados Blackbird",
+      "Caribbean Flamingo & Scarlet Ibis",
+      "Brown Pelican & Osprey",
+      "Blue Jay & Canary"
+    ],
+    correct: "Barbados Bullfinch & Barbados Blackbird"
+  },
+  {
+    question: "The west coast of Barbados is known for its calm waters. Why is this the case geologically?",
+    answers: [
+      "Protected by coral reefs from Atlantic waves",
+      "Shallow sandy beaches absorb waves",
+      "West coast faces trade winds",
+      "Artificial breakwaters"
+    ],
+    correct: "Protected by coral reefs from Atlantic waves"
+  },
+  {
+    question: "Which coral reef system surrounds much of Barbados, protecting it from strong Atlantic waves?",
+    answers: ["Fringing reef", "Barrier reef", "Atoll reef", "Patch reef"],
+    correct: "Fringing reef"
+  },
 
-  /* Animated Barbados flag background */
-  background: linear-gradient(
-    90deg,
-    #0033A0,
-    #0033A0,
-    #FFCD00,
-    #FFCD00,
-    #0033A0,
-    #0033A0
-  );
-  background-size: 300% 300%;
-  animation: flagMove 12s ease infinite;
-}
+  // ECONOMY & INDUSTRY
+  {
+    question: "Sugarcane has historically been a key crop. Approximately what percentage of Barbados’ arable land was used for sugar production at its peak?",
+    answers: ["75%", "50%", "30%", "90%"],
+    correct: "75%"
+  },
+  {
+    question: "Name two major exports of Barbados besides sugar.",
+    answers: ["Rum & molasses", "Coffee & cocoa", "Gold & silver", "Bananas & pineapples"],
+    correct: "Rum & molasses"
+  },
+  {
+    question: "What is the primary role of the Barbados Investment and Development Corporation (BIDC)?",
+    answers: [
+      "Promote business investment and support local industry",
+      "Regulate sugar exports",
+      "Manage tourism resorts",
+      "Oversee national parks"
+    ],
+    correct: "Promote business investment and support local industry"
+  },
+  {
+    question: "Barbados has a prominent offshore financial sector. Name one reason why international companies are attracted to Barbados.",
+    answers: [
+      "Favorable tax regulations",
+      "Abundant natural resources",
+      "Cheap labor",
+      "Large domestic market"
+    ],
+    correct: "Favorable tax regulations"
+  },
+  {
+    question: "Tourism is a major industry—roughly what percentage of GDP does tourism contribute to Barbados?",
+    answers: ["12%", "25%", "5%", "40%"],
+    correct: "12%"
+  },
 
-@keyframes flagMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+  // CULTURE & SOCIETY
+  {
+    question: "The Crop Over Festival is celebrated annually. What is its historical significance?",
+    answers: [
+      "Marks the end of the sugarcane harvest",
+      "Commemorates independence",
+      "Celebrates fishing season",
+      "Honors Barbadian saints"
+    ],
+    correct: "Marks the end of the sugarcane harvest"
+  },
+  {
+    question: "Name one traditional musical instrument commonly used in Barbadian folk music.",
+    answers: ["Steelpan", "Guitar", "Piano", "Violin"],
+    correct: "Steelpan"
+  },
+  {
+    question: "Which Barbadian author wrote the novel 'The Flight of the Horses'?",
+    answers: ["Austin Clarke", "George Lamming", "Kamau Brathwaite", "Shirley Holder"],
+    correct: "Austin Clarke"
+  },
+  {
+    question: "What is the Barbadian Creole term for 'friend' or 'companion'?",
+    answers: ["Bredren", "Matey", "Amigo", "Pal"],
+    correct: "Bredren"
+  },
+  {
+    question: "Name a UNESCO World Heritage Site in Barbados.",
+    answers: [
+      "Historic Bridgetown and its Garrison",
+      "Harrison’s Cave",
+      "Graeme Hall Swamp",
+      "Bathsheba Beach"
+    ],
+    correct: "Historic Bridgetown and its Garrison"
+  },
 
-.quiz-container {
-  background: white;
-  width: 90%;
-  max-width: 360px;
-  padding: 20px;
-  border-radius: 14px;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-}
-
-.trident {
-  font-size: 48px;
-  color: black;
-  margin-bottom: 10px;
-}
-
-h1 {
-  margin: 5px 0 15px;
-}
-
-#question {
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-button {
-  background-color: #0033A0;
-  color: white;
-  border: none;
-  padding: 12px;
-  margin: 6px 0;
-  width: 100%;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: transform 0.1s ease, background-color 0.2s ease;
-}
-
-button:hover:not(:disabled) {
-  transform: scale(1.03);
-}
-
-button.correct {
-  background-color: #4CAF50 !important;
-}
-
-button.wrong {
-  background-color: #f44336 !important;
-}
-
-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-#score {
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-/* Mobile tweaks */
-@media (max-width: 480px) {
-  h1 {
-    font-size: 22px;
+  // SCIENCE & NATURE
+  {
+    question: "Barbados has a significant bat population. Name one species of bat found there.",
+    answers: ["Pallid Bat", "Little Big-eared Bat", "Common Vampire Bat", "Fruit Bat"],
+    correct: "Pallid Bat"
+  },
+  {
+    question: "The island has underground caves formed in limestone. What chemical process primarily creates these caves?",
+    answers: ["Carbonation", "Oxidation", "Evaporation", "Photosynthesis"],
+    correct: "Carbonation"
+  },
+  {
+    question: "Which marine turtle species nests on Barbados’ beaches?",
+    answers: ["Hawksbill Turtle", "Green Turtle", "Loggerhead Turtle", "Leatherback Turtle"],
+    correct: "Leatherback Turtle"
+  },
+  {
+    question: "Name one invasive plant species that threatens native flora in Barbados.",
+    answers: ["Coralita", "Mangrove", "Bougainvillea", "Acacia"],
+    correct: "Coralita"
+  },
+  {
+    question: "Barbados participates in renewable energy initiatives. Name one type of renewable energy being developed on the island.",
+    answers: ["Solar power", "Nuclear power", "Coal power", "Geothermal energy"],
+    correct: "Solar power"
   }
+];
 
-  button {
-    font-size: 15px;
+let current = 0;
+let score = 0;
+let answered = false;
+
+function loadQuestion() {
+  answered = false;
+  document.getElementById("question").textContent = quiz[current].question;
+
+  const answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = "";
+
+  quiz[current].answers.forEach(answer => {
+    const button = document.createElement("button");
+    button.textContent = answer;
+
+    button.onclick = () => {
+      if (answered) return;
+      answered = true;
+
+      if (answer === quiz[current].correct) {
+        score++;
+        button.classList.add("correct");
+      } else {
+        button.classList.add("wrong");
+      }
+
+      document.querySelectorAll("#answers button").forEach(btn => {
+        btn.disabled = true;
+      });
+
+      document.getElementById("score").textContent =
+        `Score: ${score} / ${quiz.length}`;
+    };
+
+    answersDiv.appendChild(button);
+  });
+}
+
+function nextQuestion() {
+  if (!answered) return;
+
+  current++;
+  if (current < quiz.length) {
+    loadQuestion();
+  } else {
+    document.querySelector(".quiz-container").innerHTML = `
+      <div class="trident">🔱</div>
+      <h2>Game Over</h2>
+      <p>Your final score: ${score} / ${quiz.length}</p>
+      <button onclick="restartQuiz()">Restart Quiz</button>
+    `;
   }
 }
+
+function restartQuiz() {
+  current = 0;
+  score = 0;
+  const container = document.querySelector(".quiz-container");
+  container.innerHTML = `
+    <div class="trident">🔱</div>
+    <h1>Barbados Quiz</h1>
+    <p id="question"></p>
+    <div id="answers"></div>
+    <button onclick="nextQuestion()">Next</button>
+    <p id="score"></p>
+  `;
+  loadQuestion();
+}
+
+loadQuestion();
+
+
