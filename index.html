@@ -1,17 +1,24 @@
-<div class="quiz-container">
-  <div class="trident">🔱</div>
-  <h1>Barbados Quiz</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Barbados Quiz Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-  <input
-    type="text"
-    id="nickname"
-    placeholder="Enter your nickname"
-    maxlength="15"
-  />
+  <div class="quiz-container">
+    <h1>🇧🇧 Barbados Quiz</h1>
+    <p id="question"></p>
 
-  <button onclick="startQuiz()">Start Quiz</button>
-</div>
+    <div id="answers"></div>
 
-<audio id="bg-music" loop>
-  <source src="bajab-music.mp3" type="audio/mpeg">
-</audio>
+    <button onclick="nextQuestion()">Next</button>
+    <p id="score"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
