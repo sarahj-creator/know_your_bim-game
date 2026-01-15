@@ -4,6 +4,7 @@ let answered = false;
 let timeLeft = 10;
 let timerInterval;
 let nickname = "";
+const COLORS = ["red", "blue", "yellow", "green"];
 
 /* ======================
    START QUIZ
@@ -11,7 +12,7 @@ let nickname = "";
 function startQuiz() {
   const input = document.getElementById("nickname");
   nickname = input.value.trim() || "Player";
-
+  
   document.querySelector(".quiz-container").innerHTML = `
     <div class="trident">🔱</div>
     <h1>Barbados Quiz</h1>
@@ -21,13 +22,13 @@ function startQuiz() {
     <div id="answers"></div>
     <p id="score"></p>
   `;
-
+  
   const music = document.getElementById("bg-music");
   if (music) {
     music.volume = 0.25;
     music.play();
   }
-
+  
   loadQuestion();
 }
 
@@ -37,23 +38,22 @@ function startQuiz() {
 function loadQuestion() {
   answered = false;
   timeLeft = 10;
-
+  
   document.getElementById("question").textContent = quiz[current].question;
-  document.getElementById("progress").textContent =
-    `Question ${current + 1} / ${quiz.length}`;
+  document.getElementById("progress").textContent = `Question ${current + 1} / ${quiz.length}`;
   document.getElementById("timer").textContent = `⏱️ ${timeLeft}`;
-
+  
   const answersDiv = document.getElementById("answers");
   answersDiv.innerHTML = "";
-
-  quiz[current].answers.forEach(answer => {
+  
+  quiz[current].answers.forEach((answer, index) => {
     const button = document.createElement("button");
     button.textContent = answer;
-
+    button.className = `answer-btn ${COLORS[index]}`;
     button.onclick = () => handleAnswer(button, answer);
     answersDiv.appendChild(button);
   });
-
+  
   startTimer();
 }
 
@@ -65,7 +65,7 @@ function startTimer() {
   timerInterval = setInterval(() => {
     timeLeft--;
     document.getElementById("timer").textContent = `⏱️ ${timeLeft}`;
-
+    
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       revealCorrectAnswer();
@@ -81,7 +81,7 @@ function handleAnswer(button, answer) {
   if (answered) return;
   answered = true;
   clearInterval(timerInterval);
-
+  
   if (answer === quiz[current].correct) {
     score++;
     button.classList.add("correct");
@@ -89,14 +89,14 @@ function handleAnswer(button, answer) {
     button.classList.add("wrong");
     revealCorrectAnswer();
   }
-
+  
   disableAnswers();
   updateScore();
   autoNext();
 }
 
 function revealCorrectAnswer() {
-  document.querySelectorAll("#answers button").forEach(btn => {
+  document.querySelectorAll(".answer-btn").forEach(btn => {
     if (btn.textContent === quiz[current].correct) {
       btn.classList.add("correct");
     }
@@ -104,7 +104,7 @@ function revealCorrectAnswer() {
 }
 
 function disableAnswers() {
-  document.querySelectorAll("#answers button").forEach(btn => {
+  document.querySelectorAll(".answer-btn").forEach(btn => {
     btn.disabled = true;
   });
 }
@@ -114,8 +114,7 @@ function disableAnswers() {
 ====================== */
 function updateScore() {
   const percentage = Math.round((score / quiz.length) * 100);
-  document.getElementById("score").textContent =
-    `Score: ${score} / ${quiz.length} (${percentage}%)`;
+  document.getElementById("score").textContent = `Score: ${score} / ${quiz.length} (${percentage}%)`;
 }
 
 /* ======================
@@ -137,7 +136,7 @@ function autoNext() {
 ====================== */
 function endGame() {
   const percentage = Math.round((score / quiz.length) * 100);
-
+  
   document.querySelector(".quiz-container").innerHTML = `
     <div class="trident">🔱</div>
     <h2>🎉 Game Over</h2>
