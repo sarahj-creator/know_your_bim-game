@@ -2,23 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Barbados Quiz Game</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Barbados Quiz</title>
+  <style>
+    body { font-family: sans-serif; background: linear-gradient(to bottom right, #1E40AF, #1E3A8A, #FACC15); margin: 0; padding: 0; }
+    .container { max-width: 800px; margin: 50px auto; background: white; padding: 20px; border-radius: 10px; }
+    button { padding: 10px 20px; margin-top: 10px; cursor: pointer; }
+    .question { margin-bottom: 15px; }
+    .correct { background: #d1fae5; border: 2px solid #10b981; }
+    .wrong { background: #fee2e2; border: 2px solid #ef4444; }
+    .disabled { opacity: 0.6; cursor: not-allowed; }
+  </style>
 </head>
 <body>
+  <div class="container" id="quizContainer">
+    <div id="introSection">
+      <h1 id="chapterTitle"></h1>
+      <p id="chapterSubtitle"></p>
+      <p id="chapterIntro"></p>
+      <button id="startBtn">Begin Chapter</button>
+    </div>
 
-  <div class="quiz-container">
-    <h1>🇧🇧 Barbados Quiz</h1>
-    <p id="question"></p>
+    <div id="quizSection" style="display:none;">
+      <div id="questionContainer"></div>
+      <button id="nextBtn" disabled>Next Question</button>
+      <p id="scoreDisplay"></p>
+    </div>
 
-    <div id="answers"></div>
-
-    <button onclick="nextQuestion()">Next</button>
-    <p id="score"></p>
+    <div id="completeSection" style="display:none;">
+      <h1>Journey Complete!</h1>
+      <p id="finalScore"></p>
+      <button id="restartBtn">Restart Journey</button>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="quiz.js"></script>
 </body>
 </html>
-
-
