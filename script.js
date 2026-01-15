@@ -42,104 +42,108 @@ let currentQuestion = 0;
 let score = 0;
 let answered = false;
 
-// DOM elements
-const introSection = document.getElementById("introSection");
-const quizSection = document.getElementById("quizSection");
-const completeSection = document.getElementById("completeSection");
-const chapterTitle = document.getElementById("chapterTitle");
-const chapterSubtitle = document.getElementById("chapterSubtitle");
-const chapterIntro = document.getElementById("chapterIntro");
-const questionContainer = document.getElementById("questionContainer");
-const scoreDisplay = document.getElementById("scoreDisplay");
-const finalScore = document.getElementById("finalScore");
-const startBtn = document.getElementById("startBtn");
-const nextBtn = document.getElementById("nextBtn");
-const restartBtn = document.getElementById("restartBtn");
+// DOM elements (loaded after script)
+document.addEventListener('DOMContentLoaded', function() {
+  const introSection = document.getElementById("introSection");
+  const quizSection = document.getElementById("quizSection");
+  const completeSection = document.getElementById("completeSection");
+  const chapterTitle = document.getElementById("chapterTitle");
+  const chapterSubtitle = document.getElementById("chapterSubtitle");
+  const chapterIntro = document.getElementById("chapterIntro");
+  const questionContainer = document.getElementById("questionContainer");
+  const scoreDisplay = document.getElementById("scoreDisplay");
+  const finalScore = document.getElementById("finalScore");
+  const startBtn = document.getElementById("startBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const restartBtn = document.getElementById("restartBtn");
 
-// Functions
-function showIntro() {
-  const chapter = chapters[currentChapter];
-  chapterTitle.textContent = chapter.title;
-  chapterSubtitle.textContent = chapter.subtitle;
-  chapterIntro.textContent = chapter.intro;
-}
-
-function showQuestion() {
-  const chapter = chapters[currentChapter];
-  const question = chapter.questions[currentQuestion];
-  questionContainer.innerHTML = `<p class="question">${question.question}</p>`;
-  question.answers.forEach(ans => {
-    const btn = document.createElement("button");
-    btn.textContent = ans;
-    btn.onclick = () => handleAnswer(ans);
-    questionContainer.appendChild(btn);
-  });
-  nextBtn.disabled = true;
-  answered = false;
-  scoreDisplay.textContent = `Score: ${score}`;
-}
-
-function handleAnswer(answer) {
-  if (answered) return;
-  answered = true;
-
-  const chapter = chapters[currentChapter];
-  const question = chapter.questions[currentQuestion];
-  const buttons = questionContainer.querySelectorAll("button");
-
-  buttons.forEach(btn => {
-    if (btn.textContent === question.correct) {
-      btn.classList.add("correct");
-    } else if (btn.textContent === answer) {
-      btn.classList.add("wrong");
-    }
-    btn.disabled = true;
-  });
-
-  if (answer === question.correct) {
-    score++;
+  // Functions
+  function showIntro() {
+    const chapter = chapters[currentChapter];
+    chapterTitle.textContent = chapter.title;
+    chapterSubtitle.textContent = chapter.subtitle;
+    chapterIntro.textContent = chapter.intro;
   }
 
-  nextBtn.disabled = false;
-}
+  function showQuestion() {
+    const chapter = chapters[currentChapter];
+    const question = chapter.questions[currentQuestion];
+    questionContainer.innerHTML = `<p class="question">${question.question}</p>`;
+    question.answers.forEach(ans => {
+      const btn = document.createElement("button");
+      btn.textContent = ans;
+      btn.onclick = () => handleAnswer(ans);
+      questionContainer.appendChild(btn);
+    });
+    nextBtn.disabled = true;
+    answered = false;
+    scoreDisplay.textContent = `Score: ${score}/${chapters[currentChapter].questions.length}`;
+  }
 
-function nextQuestionFunc() {
-  const chapter = chapters[currentChapter];
-  if (currentQuestion < chapter.questions.length - 1) {
-    currentQuestion++;
-    showQuestion();
-  } else if (currentChapter < chapters.length - 1) {
-    currentChapter++;
+  function handleAnswer(answer) {
+    if (answered) return;
+    answered = true;
+
+    const chapter = chapters[currentChapter];
+    const question = chapter.questions[currentQuestion];
+    const buttons = questionContainer.querySelectorAll("button");
+
+    buttons.forEach(btn => {
+      btn.disabled = true;
+      if (btn.textContent === question.correct) {
+        btn.classList.add("correct");
+      } else if (btn.textContent === answer) {
+        btn.classList.add("wrong");
+      }
+    });
+
+    if (answer === question.correct) {
+      score++;
+    }
+
+    nextBtn.disabled = false;
+  }
+
+  function nextQuestionFunc() {
+    const chapter = chapters[currentChapter];
+    if (currentQuestion < chapter.questions.length - 1) {
+      currentQuestion++;
+      showQuestion();
+    } else if (currentChapter < chapters.length - 1) {
+      currentChapter++;
+      currentQuestion = 0;
+      introSection.style.display = "block";
+      quizSection.style.display = "none";
+      completeSection.style.display = "none";
+      showIntro();
+    } else {
+      completeSection.style.display = "block";
+      quizSection.style.display = "none";
+      finalScore.textContent = `Your final score: ${score}/${chapters.reduce((total, ch) => total + ch.questions.length, 0)}`;
+    }
+  }
+
+  function restartQuiz() {
+    currentChapter = 0;
     currentQuestion = 0;
+    score = 0;
+    answered = false;
     introSection.style.display = "block";
     quizSection.style.display = "none";
+    completeSection.style.display = "none";
     showIntro();
-  } else {
-    completeSection.style.display = "block";
-    quizSection.style.display = "none";
-    finalScore.textContent = `Your final score: ${score}`;
   }
-}
 
-function restartQuiz() {
-  currentChapter = 0;
-  currentQuestion = 0;
-  score = 0;
-  introSection.style.display = "block";
-  quizSection.style.display = "none";
-  completeSection.style.display = "none";
+  // Event listeners
+  startBtn.addEventListener("click", () => {
+    introSection.style.display = "none";
+    quizSection.style.display = "block";
+    showQuestion();
+  });
+
+  nextBtn.addEventListener("click", nextQuestionFunc);
+  restartBtn.addEventListener("click", restartQuiz);
+
+  // Initialize
   showIntro();
-}
-
-// Event listeners
-startBtn.addEventListener("click", () => {
-  introSection.style.display = "none";
-  quizSection.style.display = "block";
-  showQuestion();
 });
-
-nextBtn.addEventListener("click", nextQuestionFunc);
-restartBtn.addEventListener("click", restartQuiz);
-
-// Initialize
-showIntro();
