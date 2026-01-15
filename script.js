@@ -1,3 +1,9 @@
+Current script
+
+Admenmants 
+
+Make it like like kahoot format 
+
 const quiz = [
   // HISTORY & POLITICS
   {
@@ -245,5 +251,7 @@ function restartQuiz() {
 }
 
 loadQuestion();
+
+
 
 
