@@ -3,7 +3,37 @@ let score = 0;
 let answered = false;
 let timeLeft = 10;
 let timerInterval;
+let nickname = "";
 
+/* ======================
+   START QUIZ
+====================== */
+function startQuiz() {
+  const input = document.getElementById("nickname");
+  nickname = input.value.trim() || "Player";
+
+  document.querySelector(".quiz-container").innerHTML = `
+    <div class="trident">🔱</div>
+    <h1>Barbados Quiz</h1>
+    <p id="progress"></p>
+    <p id="timer"></p>
+    <p id="question"></p>
+    <div id="answers"></div>
+    <p id="score"></p>
+  `;
+
+  const music = document.getElementById("bg-music");
+  if (music) {
+    music.volume = 0.25;
+    music.play();
+  }
+
+  loadQuestion();
+}
+
+/* ======================
+   LOAD QUESTION
+====================== */
 function loadQuestion() {
   answered = false;
   timeLeft = 10;
@@ -27,6 +57,9 @@ function loadQuestion() {
   startTimer();
 }
 
+/* ======================
+   TIMER
+====================== */
 function startTimer() {
   clearInterval(timerInterval);
   timerInterval = setInterval(() => {
@@ -41,6 +74,9 @@ function startTimer() {
   }, 1000);
 }
 
+/* ======================
+   ANSWER HANDLING
+====================== */
 function handleAnswer(button, answer) {
   if (answered) return;
   answered = true;
@@ -73,11 +109,18 @@ function disableAnswers() {
   });
 }
 
+/* ======================
+   SCORE
+====================== */
 function updateScore() {
+  const percentage = Math.round((score / quiz.length) * 100);
   document.getElementById("score").textContent =
-    `Score: ${score} / ${quiz.length}`;
+    `Score: ${score} / ${quiz.length} (${percentage}%)`;
 }
 
+/* ======================
+   NEXT QUESTION
+====================== */
 function autoNext() {
   setTimeout(() => {
     current++;
@@ -89,14 +132,18 @@ function autoNext() {
   }, 2000);
 }
 
+/* ======================
+   END GAME
+====================== */
 function endGame() {
+  const percentage = Math.round((score / quiz.length) * 100);
+
   document.querySelector(".quiz-container").innerHTML = `
     <div class="trident">🔱</div>
-    <h2>Game Over</h2>
-    <p>Your final score</p>
+    <h2>🎉 Game Over</h2>
+    <p>${nickname}, your final score:</p>
     <h1>${score} / ${quiz.length}</h1>
-    <button onclick="location.reload()">Restart Quiz</button>
+    <h3>${percentage}%</h3>
+    <button onclick="location.reload()">Play Again</button>
   `;
 }
-
-loadQuestion();
