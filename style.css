@@ -1,103 +1,41 @@
-* {
-  box-sizing: border-box;
+body { 
+  font-family: sans-serif; 
+  background: linear-gradient(to bottom right, #1E40AF, #1E3A8A, #FACC15); 
+  margin: 0; 
+  padding: 0; 
 }
-
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  /* Animated Barbados flag background */
-  background: linear-gradient(
-    90deg,
-    #0033A0,
-    #0033A0,
-    #FFCD00,
-    #FFCD00,
-    #0033A0,
-    #0033A0
-  );
-  background-size: 300% 300%;
-  animation: flagMove 12s ease infinite;
+.container { 
+  max-width: 800px; 
+  margin: 50px auto; 
+  background: white; 
+  padding: 20px; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
 }
-
-@keyframes flagMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+button { 
+  padding: 10px 20px; 
+  margin: 5px 0; 
+  cursor: pointer; 
+  border: none; 
+  border-radius: 5px; 
+  font-size: 16px; 
 }
-
-.quiz-container {
-  background: white;
-  width: 90%;
-  max-width: 360px;
-  padding: 20px;
-  border-radius: 14px;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+button:hover { transform: translateY(-2px); }
+.question { 
+  margin-bottom: 15px; 
+  font-size: 18px; 
+  font-weight: bold; 
 }
-
-.trident {
-  font-size: 48px;
-  color: black;
-  margin-bottom: 10px;
+.correct { 
+  background: #d1fae5 !important; 
+  border: 2px solid #10b981 !important; 
 }
-
-h1 {
-  margin: 5px 0 15px;
+.wrong { 
+  background: #fee2e2 !important; 
+  border: 2px solid #ef4444 !important; 
 }
-
-#question {
-  font-weight: bold;
-  margin-bottom: 15px;
+.disabled { 
+  opacity: 0.6; 
+  cursor: not-allowed; 
 }
-
-button {
-  background-color: #0033A0;
-  color: white;
-  border: none;
-  padding: 12px;
-  margin: 6px 0;
-  width: 100%;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: transform 0.1s ease, background-color 0.2s ease;
-}
-
-button:hover:not(:disabled) {
-  transform: scale(1.03);
-}
-
-button.correct {
-  background-color: #4CAF50 !important;
-}
-
-button.wrong {
-  background-color: #f44336 !important;
-}
-
-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-#score {
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-/* Mobile tweaks */
-@media (max-width: 480px) {
-  h1 {
-    font-size: 22px;
-  }
-
-  button {
-    font-size: 15px;
-  }
-}
-
+h1 { color: #1E40AF; }
