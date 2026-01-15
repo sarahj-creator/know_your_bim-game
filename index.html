@@ -1,26 +1,17 @@
+<div class="quiz-container">
+  <div class="trident">🔱</div>
+  <h1>Barbados Quiz</h1>
+
+  <input
+    type="text"
+    id="nickname"
+    placeholder="Enter your nickname"
+    maxlength="15"
+  />
+
+  <button onclick="startQuiz()">Start Quiz</button>
+</div>
+
 <audio id="bg-music" loop>
   <source src="bajab-music.mp3" type="audio/mpeg">
 </audio>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barbados Quiz Game</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-  <div class="quiz-container">
-    <div class="trident">🔱</div>
-    <h1>Barbados Quiz</h1>
-    <p id="question"></p>
-    <div id="answers"></div>
-    <button onclick="nextQuestion()">Next</button>
-    <p id="score"></p>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
-
