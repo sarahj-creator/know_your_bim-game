@@ -1,7 +1,37 @@
 // ===============================
-// QUIZ DATA
+// QUIZ DATA - BARBADOS HISTORY JOURNEY
 // ===============================
-const chapters = [ /* YOUR CHAPTER DATA UNCHANGED */ ];
+const chapters = [
+  {
+    id: 1,
+    title: "Indigenous Beginnings",
+    subtitle: "The Island Before Colonization",
+    intro: "Long before European sails appeared on the horizon, Barbados was home to indigenous peoples...",
+    questions: [
+      {
+        question: "Who were the earliest known inhabitants of Barbados?",
+        answers: ["The Arawaks", "The Caribs", "The Tainos", "The Lucayans"],
+        correct: "The Arawaks",
+        explanation: "The Arawaks were among the earliest inhabitants..."
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: "Colonial Era",
+    subtitle: "From Settlement to Sugar Empire",
+    intro: "In 1627, English settlers arrived...",
+    questions: [
+      {
+        question: "When did the English first settle in Barbados?",
+        answers: ["1605", "1627", "1640", "1655"],
+        correct: "1627",
+        explanation: "English settlers first arrived in 1627."
+      }
+    ]
+  }
+  // (keep ALL your remaining chapters exactly as you had them)
+];
 
 // ===============================
 // STATE
@@ -9,7 +39,7 @@ const chapters = [ /* YOUR CHAPTER DATA UNCHANGED */ ];
 let currentChapter = 0;
 let currentQuestion = 0;
 let score = 0;
-let chapterScores = [0, 0, 0, 0, 0];
+let chapterScores = new Array(chapters.length).fill(0);
 let answered = false;
 let selectedAnswer = null;
 let playerName = "";
@@ -37,11 +67,11 @@ function showLandingPage() {
     const input = document.getElementById("nicknameInput");
     playerName = input.value.trim() || "Player";
 
-    // browser-safe music start
-    bgMusic.volume = 0.4;
-    bgMusic.play().catch(() => {
-      console.log("Music blocked until user interaction");
-    });
+    // Safe music start (won’t break game if blocked)
+    if (bgMusic) {
+      bgMusic.volume = 0.4;
+      bgMusic.play().catch(() => {});
+    }
 
     showChapterIntro();
   });
@@ -63,7 +93,9 @@ function showChapterIntro() {
     </div>
   `;
 
-  document.getElementById("beginChapter").addEventListener("click", startChapter);
+  document
+    .getElementById("beginChapter")
+    .addEventListener("click", startChapter);
 }
 
 // ===============================
@@ -81,9 +113,7 @@ function showQuestion() {
     <div class="quiz-screen">
       <p>${q.question}</p>
       ${q.answers
-        .map(
-          a => `<button class="answer-btn">${a}</button>`
-        )
+        .map(a => `<button class="answer-btn">${a}</button>`)
         .join("")}
       <button id="nextBtn" class="nav-btn" disabled>Next</button>
     </div>
@@ -119,7 +149,10 @@ function nextQuestion() {
 
 // ===============================
 function showFinalResults() {
-  const total = chapters.reduce((t, c) => t + c.questions.length, 0);
+  const total = chapters.reduce(
+    (sum, ch) => sum + ch.questions.length,
+    0
+  );
   const percent = Math.round((score / total) * 100);
 
   app.innerHTML = `
@@ -130,7 +163,9 @@ function showFinalResults() {
     </div>
   `;
 
-  document.getElementById("restartBtn").addEventListener("click", restartQuiz);
+  document
+    .getElementById("restartBtn")
+    .addEventListener("click", restartQuiz);
 }
 
 // ===============================
@@ -138,7 +173,7 @@ function restartQuiz() {
   currentChapter = 0;
   currentQuestion = 0;
   score = 0;
-  chapterScores = [0, 0, 0, 0, 0];
+  chapterScores = new Array(chapters.length).fill(0);
   showLandingPage();
 }
 
