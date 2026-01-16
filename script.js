@@ -123,7 +123,7 @@ const chapters = [
 ];
 
 // ===============================
-// STATE
+// STATE VARIABLES
 // ===============================
 let currentChapter = 0;
 let currentQuestion = 0;
@@ -131,11 +131,43 @@ let score = 0;
 let chapterScores = [0, 0, 0, 0, 0];
 let answered = false;
 let selectedAnswer = null;
+let playerName = ""; // stores nickname from landing page
 
 // ===============================
 // APP CONTAINER
 // ===============================
 const app = document.querySelector("#app");
+
+// ===============================
+// LANDING PAGE
+// ===============================
+function showLandingPage() {
+  app.innerHTML = `
+    <div class="landing-page">
+      <h1>Barbados History Journey</h1>
+      <p>Enter your nickname to begin:</p>
+      <input type="text" id="nicknameInput" placeholder="Your nickname" />
+      <button id="startBtn" class="nav-btn">Start Journey</button>
+      
+      <!-- Background music -->
+      <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  `;
+
+  const startButton = document.getElementById("startBtn");
+  const nicknameInput = document.getElementById("nicknameInput");
+  const bgMusic = document.getElementById("bgMusic");
+
+  startButton.addEventListener("click", () => {
+    const name = nicknameInput.value.trim();
+    playerName = name ? name : "Player"; // fallback if blank
+    bgMusic.play(); // start music
+    showChapterIntro(); // start quiz
+  });
+}
 
 // ===============================
 // SHOW CHAPTER INTRO
@@ -152,6 +184,7 @@ function showChapterIntro() {
         ${chapter.intro}
       </div>
       <button id="startBtn" class="nav-btn">Begin Chapter ${chapter.id}</button>
+      <div class="player-name">Player: ${playerName}</div>
     </div>
   `;
   
@@ -361,10 +394,10 @@ function restartQuiz() {
   chapterScores = [0, 0, 0, 0, 0];
   answered = false;
   selectedAnswer = null;
-  showChapterIntro();
+  showLandingPage(); // go back to landing page on restart
 }
 
 // ===============================
 // INITIALIZE QUIZ
 // ===============================
-showChapterIntro();
+showLandingPage(); // show landing page first
