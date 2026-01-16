@@ -1,31 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Barbados Quiz</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbados History Journey</title>
+    <link rel="stylesheet" href="./src/style.css">
 </head>
 <body>
-  <div class="container" id="quizContainer">
-    <div id="introSection">
-      <h1 id="chapterTitle"></h1>
-      <p id="chapterSubtitle"></p>
-      <p id="chapterIntro"></p>
-      <button id="startBtn">Begin Chapter</button>
-    </div>
-
-    <div id="quizSection" style="display:none;">
-      <div id="questionContainer"></div>
-      <button id="nextBtn" disabled>Next Question</button>
-      <p id="scoreDisplay"></p>
-    </div>
-
-    <div id="completeSection" style="display:none;">
-      <h1>Journey Complete!</h1>
-      <p id="finalScore"></p>
-      <button id="restartBtn">Restart Journey</button>
-    </div>
-  </div>
-  <script src="quiz.js"></script>
+    <div id="app"></div>
+    <script type="module" src="./src/main.js"></script>
 </body>
 </html>
