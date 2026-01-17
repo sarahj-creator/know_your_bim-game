@@ -28,7 +28,7 @@ const chapters = [
     }
   ]
 },
-    id: 2,
+  {id: 2,
     title: "Colonial Era",
     subtitle: "From Settlement to Sugar Empire",
     intro: "In 1627, English settlers arrived and established a colony that would become one of the wealthiest in the British Empire. The introduction of sugar cultivation transformed the island's landscape, economy, and social structure forever.",
@@ -406,6 +406,7 @@ function restartQuiz() {
 // INITIALIZE QUIZ
 // ===============================
 showLandingPage(); // show landing page first
+
 
 
 
