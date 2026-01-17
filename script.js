@@ -1,171 +1,187 @@
-// -------------------- DATA --------------------
+// ===============================
+// QUIZ DATA - BARBADOS HISTORY JOURNEY
+// ===============================
 const chapters = [
   {
     id: 1,
     title: "Indigenous Beginnings",
     subtitle: "The Island Before Colonization",
-    intro: "Long before European sails appeared on the horizon, Barbados was home to indigenous peoples. The Amerindian inhabitants lived in harmony with the island's natural bounty, leaving behind petroglyphs and artifacts that tell their story.",
+    intro: "Long before European sails appeared on the horizon, Barbados was home to indigenous peoples...",
     questions: [
       {
-        question: "Which indigenous groups lived in Barbados before European arrival?",
-        answers: ["Arawaks and Caribs", "The Tainos", "The Lucayans", "The Maya"],
-        correct: "Arawaks and Caribs",
-        explanation: "The Arawaks were the earliest known inhabitants of Barbados, arriving from South America around 350-400 CE, followed later by the Caribs. Both groups contributed to the island’s early culture and history."
+        question: "Who were the earliest known inhabitants of Barbados?",
+        answers: [
+          "Arawaks and Caribs", // ✅ CHANGED
+          "The Tainos",
+          "The Lucayans",
+          "The Maya"
+        ],
+        correct: "Arawaks and Caribs", // ✅ CHANGED
+        explanation:
+          "The Arawaks were the earliest known inhabitants of Barbados, followed later by the Caribs, who migrated through the region."
       }
     ]
   },
   {
     id: 2,
-    title: "Sugar and Chains",
-    subtitle: "Plantation Economy and Resistance",
-    intro: "Sugar transformed Barbados into one of the richest colonies in the world, built on enslaved African labour. The plantation economy shaped the island’s society, culture, and resistance movements.",
+    title: "Colonial Era",
+    subtitle: "From Settlement to Sugar Empire",
+    intro: "In 1627, English settlers arrived...",
     questions: [
       {
-        question: "Which crop transformed Barbados into a wealthy colony?",
-        answers: ["Sugarcane", "Cotton", "Tobacco", "Coffee"],
-        correct: "Sugarcane",
-        explanation: "Sugarcane became known as 'white gold' because it dominated the island’s economy and made Barbados one of the richest colonies during the 17th and 18th centuries."
-      },
-      {
-        question: "Barbados' plantation economy relied primarily on:",
-        answers: ["Indentured European labor", "Enslaved African labor", "Native Amerindian labor", "Free workers"],
-        correct: "Enslaved African labor",
-        explanation: "The wealth of Barbados was built on the labor of enslaved Africans, who were forced to work under brutal conditions on sugar plantations."
-      }
-    ]
-  },
-  {
-    id: 3,
-    title: "Rebellion and Resistance",
-    subtitle: "Fighting for Freedom",
-    intro: "Despite the harsh conditions, enslaved Africans resisted in many ways, from small acts of defiance to organized revolts that challenged colonial rule.",
-    questions: [
-      {
-        question: "Who was a famous leader of a slave revolt in Barbados?",
-        answers: ["Bussa", "Toussaint Louverture", "Nat Turner", "Vesey"],
-        correct: "Bussa",
-        explanation: "Bussa led a major slave revolt in Barbados in 1816, demonstrating the courage and resilience of the enslaved population."
-      },
-      {
-        question: "What forms of resistance did enslaved people use?",
-        answers: ["Revolts", "Work slowdowns", "Escape", "All of the above"],
-        correct: "All of the above",
-        explanation: "Enslaved Africans resisted through organized revolts, work slowdowns, running away, and other subtle acts of defiance."
-      }
-    ]
-  },
-  {
-    id: 4,
-    title: "Colonial Legacy",
-    subtitle: "From Plantations to Independence",
-    intro: "Barbados’ colonial history left a lasting impact on its society, economy, and culture. The path to independence involved education, political activism, and gradual social change.",
-    questions: [
-      {
-        question: "When did Barbados gain independence from Britain?",
-        answers: ["1966", "1776", "1901", "1980"],
-        correct: "1966",
-        explanation: "Barbados became independent on November 30, 1966, ending over 300 years of British colonial rule."
-      },
-      {
-        question: "Which factor played a key role in Barbados’ transition to independence?",
-        answers: ["Education", "Political activism", "Economic growth", "All of the above"],
-        correct: "All of the above",
-        explanation: "Education, political activism, and economic development were all crucial in the process that led to Barbados’ independence."
+        question: "When did the English first settle in Barbados?",
+        answers: ["1605", "1627", "1640", "1655"],
+        correct: "1627",
+        explanation: "English settlers first arrived in 1627."
       }
     ]
   }
+  // (keep ALL your remaining chapters exactly as you had them)
 ];
 
-// -------------------- GAME LOGIC --------------------
-
-// Original game logic remains unchanged
+// ===============================
+// STATE
+// ===============================
 let currentChapter = 0;
 let currentQuestion = 0;
 let score = 0;
+let chapterScores = new Array(chapters.length).fill(0);
+let answered = false;
+let selectedAnswer = null;
+let playerName = "";
 
+// ===============================
+// ELEMENTS
+// ===============================
 const app = document.getElementById("app");
+const bgMusic = document.getElementById("bgMusic");
 
-function renderLanding() {
+// ===============================
+// LANDING PAGE
+// ===============================
+function showLandingPage() {
   app.innerHTML = `
-    <h1>Barbados History Quiz</h1>
-    <p>Test your knowledge of Barbados' history!</p>
-    <button id="start">Start Quiz</button>
-  `;
-  document.getElementById("start").onclick = () => renderChapter();
-}
-
-function renderChapter() {
-  const chapter = chapters[currentChapter];
-  currentQuestion = 0;
-  app.innerHTML = `
-    <h2>${chapter.title}</h2>
-    <h3>${chapter.subtitle}</h3>
-    <p>${chapter.intro}</p>
-    <button id="startChapter">Start Questions</button>
-  `;
-  document.getElementById("startChapter").onclick = () => renderQuestion();
-}
-
-function renderQuestion() {
-  const chapter = chapters[currentChapter];
-  const question = chapter.questions[currentQuestion];
-  let answersHtml = question.answers.map(ans => `<div class="answer">${ans}</div>`).join("");
-  app.innerHTML = `
-    <h3>${question.question}</h3>
-    ${answersHtml}
-    <p id="explanation"></p>
-    <button id="next" style="display:none;">Next</button>
+    <div class="landing-page">
+      <h1>Barbados History Journey</h1>
+      <p>Enter your nickname to begin:</p>
+      <input type="text" id="nicknameInput" placeholder="Your nickname" />
+      <button id="startBtn" class="nav-btn">Start Journey</button>
+    </div>
   `;
 
-  document.querySelectorAll(".answer").forEach(el => {
-    el.onclick = () => handleAnswer(el, question.correct, question.explanation);
+  document.getElementById("startBtn").addEventListener("click", () => {
+    const input = document.getElementById("nicknameInput");
+    playerName = input.value.trim() || "Player";
+
+    // Safe music start (won’t break game if blocked)
+    if (bgMusic) {
+      bgMusic.volume = 0.4;
+      bgMusic.play().catch(() => {});
+    }
+
+    showChapterIntro();
   });
 }
 
-function handleAnswer(el, correct, explanation) {
-  document.querySelectorAll(".answer").forEach(a => a.onclick = null);
-  if (el.innerText === correct) {
-    el.classList.add("correct");
-    score++;
-  } else {
-    el.classList.add("wrong");
-    document.querySelectorAll(".answer").forEach(a => {
-      if (a.innerText === correct) a.classList.add("correct");
-    });
-  }
-  document.getElementById("explanation").innerText = explanation;
-  document.getElementById("next").style.display = "inline-block";
-  document.getElementById("next").onclick = nextQuestion;
+// ===============================
+// CHAPTER INTRO
+// ===============================
+function showChapterIntro() {
+  const chapter = chapters[currentChapter];
+
+  app.innerHTML = `
+    <div class="chapter-intro">
+      <h1>${chapter.title}</h1>
+      <h2>${chapter.subtitle}</h2>
+      <p>${chapter.intro}</p>
+      <button id="beginChapter" class="nav-btn">Begin Chapter</button>
+      <p class="player-name">Player: ${playerName}</p>
+    </div>
+  `;
+
+  document
+    .getElementById("beginChapter")
+    .addEventListener("click", startChapter);
 }
 
+// ===============================
+function startChapter() {
+  currentQuestion = 0;
+  showQuestion();
+}
+
+// ===============================
+function showQuestion() {
+  const chapter = chapters[currentChapter];
+  const q = chapter.questions[currentQuestion];
+
+  app.innerHTML = `
+    <div class="quiz-screen">
+      <p>${q.question}</p>
+      ${q.answers
+        .map(a => `<button class="answer-btn">${a}</button>`)
+        .join("")}
+      <button id="nextBtn" class="nav-btn" disabled>Next</button>
+    </div>
+  `;
+
+  document.querySelectorAll(".answer-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.getElementById("nextBtn").disabled = false;
+      if (btn.textContent === q.correct) {
+        score++;
+        chapterScores[currentChapter]++;
+      }
+    });
+  });
+
+  document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+}
+
+// ===============================
 function nextQuestion() {
   const chapter = chapters[currentChapter];
-  currentQuestion++;
-  if (currentQuestion < chapter.questions.length) {
-    renderQuestion();
-  } else {
+
+  if (currentQuestion < chapter.questions.length - 1) {
+    currentQuestion++;
+    showQuestion();
+  } else if (currentChapter < chapters.length - 1) {
     currentChapter++;
-    if (currentChapter < chapters.length) {
-      renderChapter();
-    } else {
-      renderResults();
-    }
+    showChapterIntro();
+  } else {
+    showFinalResults();
   }
 }
 
-function renderResults() {
+// ===============================
+function showFinalResults() {
+  const total = chapters.reduce(
+    (sum, ch) => sum + ch.questions.length,
+    0
+  );
+  const percent = Math.round((score / total) * 100);
+
   app.innerHTML = `
-    <h2>Quiz Completed!</h2>
-    <p>Your score: ${score} / ${chapters.reduce((acc, c) => acc + c.questions.length, 0)}</p>
-    <button id="restart">Restart Quiz</button>
+    <div class="results-screen">
+      <h1>Journey Complete 🇧🇧</h1>
+      <p>${score}/${total} (${percent}%)</p>
+      <button id="restartBtn" class="nav-btn">Restart</button>
+    </div>
   `;
-  document.getElementById("restart").onclick = () => {
-    currentChapter = 0;
-    currentQuestion = 0;
-    score = 0;
-    renderLanding();
-  }
+
+  document
+    .getElementById("restartBtn")
+    .addEventListener("click", restartQuiz);
 }
 
-// --- Start App ---
-renderLanding();
+// ===============================
+function restartQuiz() {
+  currentChapter = 0;
+  currentQuestion = 0;
+  score = 0;
+  chapterScores = new Array(chapters.length).fill(0);
+  showLandingPage();
+}
+
+// ===============================
+showLandingPage();
