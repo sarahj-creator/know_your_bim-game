@@ -1,3 +1,4 @@
+// -------------------- DATA --------------------
 const chapters = [
   {
     id: 1,
@@ -75,7 +76,7 @@ const chapters = [
   }
 ];
 
-// --- App Logic ---
+// -------------------- GAME LOGIC --------------------
 
 let currentChapter = 0;
 let currentQuestion = 0;
@@ -83,6 +84,7 @@ let score = 0;
 
 const app = document.getElementById("app");
 
+// --- Landing Page ---
 function renderLanding() {
   app.innerHTML = `
     <h1>Barbados History Quiz</h1>
@@ -92,6 +94,7 @@ function renderLanding() {
   document.getElementById("start").onclick = () => renderChapter();
 }
 
+// --- Chapter Page ---
 function renderChapter() {
   const chapter = chapters[currentChapter];
   currentQuestion = 0;
@@ -104,6 +107,7 @@ function renderChapter() {
   document.getElementById("startChapter").onclick = () => renderQuestion();
 }
 
+// --- Question Page ---
 function renderQuestion() {
   const chapter = chapters[currentChapter];
   const question = chapter.questions[currentQuestion];
@@ -120,8 +124,9 @@ function renderQuestion() {
   });
 }
 
+// --- Handle Answer ---
 function handleAnswer(el, correct, explanation) {
-  document.querySelectorAll(".answer").forEach(a => a.onclick = null); // disable clicking
+  document.querySelectorAll(".answer").forEach(a => a.onclick = null);
   if (el.innerText === correct) {
     el.classList.add("correct");
     score++;
@@ -136,6 +141,7 @@ function handleAnswer(el, correct, explanation) {
   document.getElementById("next").onclick = nextQuestion;
 }
 
+// --- Next Question ---
 function nextQuestion() {
   const chapter = chapters[currentChapter];
   currentQuestion++;
@@ -151,6 +157,7 @@ function nextQuestion() {
   }
 }
 
+// --- Results Page ---
 function renderResults() {
   app.innerHTML = `
     <h2>Quiz Completed!</h2>
