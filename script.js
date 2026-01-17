@@ -3,13 +3,27 @@
 // ===============================
 const chapters = [
   {
-    id: 1,
-    title: "Indigenous Beginnings",
-    subtitle: "The Island Before Colonization",
-    intro: "Long before European sails appeared on the horizon, Barbados was home to indigenous peoples. The Amerindian inhabitants lived in harmony with the island's natural bounty, leaving behind petroglyphs and artifacts that tell their story.",
-    questions: [
-      {
-        question: "Who were the earliest known inhabitants of Barbados?",
+
+  id: 1,
+  title: "Indigenous Beginnings",
+  subtitle: "The Island Before Colonization",
+  intro: "Long before European sails appeared on the horizon, Barbados was home to indigenous peoples. The Amerindian inhabitants lived in harmony with the island's natural bounty, leaving behind petroglyphs and artifacts that tell their story.",
+  questions: [
+    {
+      question: "Which indigenous groups lived in Barbados before European arrival?",
+      answers: [
+        "Arawaks and Caribs",
+        "The Tainos",
+        "The Lucayans",
+        "The Maya"
+      ],
+      correct: "Arawaks and Caribs",
+      explanation: "The Arawaks were the earliest known inhabitants of Barbados, followed later by the Caribs, who migrated through the Caribbean from South America."
+    }
+  ]
+  }
+
+}on: "Who were the earliest known inhabitants of Barbados?",
         answers: ["The Arawaks", "The Caribs", "The Tainos", "The Lucayans"],
         correct: "The Arawaks",
         explanation: "The Arawaks were among the earliest inhabitants of Barbados, arriving from South America around 350-400 CE. They were peaceful farmers and fishermen."
@@ -401,3 +415,4 @@ function restartQuiz() {
 // INITIALIZE QUIZ
 // ===============================
 showLandingPage(); // show landing page first
+
